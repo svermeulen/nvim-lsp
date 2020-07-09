@@ -3,8 +3,8 @@ local util = require 'nvim_lsp/util'
 
 local name = "pyls_ms"
 
-local function get_python_version()
-  local f = io.popen("python --version 2>&1") -- runs command
+local function get_python_version(exePath)
+  local f = io.popen("'" .. exePath .. "' --version 2>&1") -- runs command
   local l = f:read("*a") -- read output of command
   f:close()
   return l:match("^Python%s*(...).*%s*$")
@@ -76,10 +76,17 @@ local function make_installer()
       cmd = cmd;
     }
   end
-  function X.configure(config)
+  function X.configure(config, rootDir)
     local install_info = X.info()
     if install_info.is_installed then
       config.cmd = cmd
+      interpreterPathCandidatePath = rootDir .. '/.venv/bin/python'
+      if util.path.exists(interpreterPathCandidatePath) then
+        config.init_options.interpreter.properties = {
+          InterpreterPath = interpreterPathCandidatePath;
+          Version = get_python_version(interpreterPathCandidatePath);
+        }
+      end
     end
   end
   return X
@@ -91,9 +98,7 @@ configs[name] = {
 
   default_config = {
     filetypes = {"python"};
-    root_dir = function(fname)
-      return util.find_git_ancestor(fname) or vim.loop.os_homedir()
-    end;
+    root_dir = util.root_pattern(".venv", ".git");
     settings = {
       python = {
         analysis = {
@@ -103,15 +108,15 @@ configs[name] = {
         };
       };
     };
-    on_new_config = function(config)
-      installer.configure(config)
+    on_new_config = function(config, rootDir)
+      installer.configure(config, rootDir)
     end;
     init_options = {
       interpreter = {
         properties =
         {
           InterpreterPath = vim.fn.exepath("python");
-          Version = get_python_version();
+          Version = get_python_version("python");
         };
       };
       displayOptions = {};
