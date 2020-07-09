@@ -293,7 +293,7 @@ function M.root_pattern(...)
       if fn.globpath(path, pattern) ~= "" then
         return path
       end
-      if M.path.exists(M.path.join(path, pattern)) then
+      if M.path.exists(vim.fn.glob(M.path.join(path, pattern))) then
         return path
       end
     end

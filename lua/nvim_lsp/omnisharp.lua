@@ -15,7 +15,7 @@ local function make_installer()
     bin_name = 'Omnisharp.exe'
   elseif vim.fn.has('mac') == 1 then
     url = 'osx'
-    extracted_dir = 'darwin'
+    extracted_dir = ''
   end
 
   local download_target = util.path.join{install_dir, string.format("omnisharp-%s.zip", url)}
