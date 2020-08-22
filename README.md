@@ -970,14 +970,6 @@ This server accepts configuration via the `settings` key.
 
   Whether to consider files ending \'\_test\.dart\' that are outside of the test folder as tests\. This should be enabled if you put tests inside the \'lib\' folder of your Flutter application so they will be run with \'flutter test\' and not \'flutter run\'\.
 
-- **`dart.analysisExcludedFolders`**: `array`
-
-  Default: `{}`
-  
-  Array items: `{type = "string"}`
-  
-  An array of paths to be excluded from Dart analysis\. This option should usually be set at the Workspace level\.
-
 - **`dart.analysisServerFolding`**: `boolean`
 
   Default: `true`
@@ -2006,11 +1998,11 @@ This server accepts configuration via the `settings` key.
   
   When adding an import\, use the formatter on the result
 
-- **`haskell.formattingProvider`**: `enum { "brittany", "floskell", "ormolu", "stylish-haskell", "none" }`
+- **`haskell.formattingProvider`**: `enum { "brittany", "floskell", "fourmolu", "ormolu", "stylish-haskell", "none" }`
 
   Default: `"ormolu"`
   
-  The tool to use for formatting requests
+  The formatter to use when formatting a document or range
 
 - **`haskell.hlintOn`**: `boolean`
 
@@ -2405,6 +2397,12 @@ This server accepts configuration via the `settings` key.
   
   Check that all declared arguments are used within the function body\.
 
+- **`julia.packageServer`**: `string`
+
+  Default: `""`
+  
+  Julia package server\. Set\'s the \`JULIA\_PKG\_SERVER\` environment variable \*before\* starting a Julia process\. Leave this empty to use the systemwide default\. Requires a restart of the Julia process\.
+
 - **`julia.trace.server`**: `enum { "off", "messages", "verbose" }`
 
   Default: `"off"`
@@ -2782,7 +2780,7 @@ This server accepts configuration via the `settings` key.
 
 - **`metals.serverVersion`**: `string`
 
-  Default: `"0.9.2"`
+  Default: `"0.9.3"`
   
   null
 
@@ -3568,7 +3566,7 @@ This server accepts configuration via the `settings` key.
 
 - **`rust-client.disableRustup`**: `boolean`
 
-  Disable usage of rustup and use rustc\/rls from PATH\.
+  Disable usage of rustup and use rustc\/rls\/rust\-analyzer from PATH\.
 
 - **`rust-client.enableMultiProjectSetup`**: `boolean|null`
 
@@ -3962,6 +3960,14 @@ This server accepts configuration via the `settings` key.
   Default: `{["/rustc/<id>"] = "${env:USERPROFILE}/.rustup/toolchains/<toolchain-id>/lib/rustlib/src/rust"}`
   
   Optional source file mappings passed to the debug engine\.
+
+- **`rust-analyzer.diagnostics.disabled`**: `array`
+
+  Default: `{}`
+  
+  Array items: `{type = "string"}`
+  
+  List of rust\-analyzer diagnostics to disable
 
 - **`rust-analyzer.diagnostics.enable`**: `boolean`
 
@@ -4549,6 +4555,14 @@ You can use [released binary](https://github.com/juliosueiras/terraform-lsp/rele
 
 This server accepts configuration via the `settings` key.
 <details><summary>Available settings:</summary>
+
+- **`terraform-ls.excludeRootModules`**: `array`
+
+  Default: `{}`
+  
+  Array items: `{type = "string"}`
+  
+  Per\-workspace list of module directories for the language server to exclude
 
 - **`terraform-ls.rootModules`**: `array`
 
